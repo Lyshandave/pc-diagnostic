@@ -5,29 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Interactive PC Hardware Diagnostic Tool">
   <meta name="robots" content="noindex">
-  <title>PC Diagnostic Tool | Lyshan Dave</title>
+  <title>PC Diagnostic Tool | Advanced Hardware Monitor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="header">
-    <h1><i class="fas fa-stethoscope" aria-hidden="true"></i> PC Diagnostic Tool</h1>
-    <a href="../../#projects" class="back-btn"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back</a>
+    <div class="header-logo">
+      <i class="fas fa-stethoscope" aria-hidden="true"></i>
+      <span>PC Diagnostic Tool</span>
+    </div>
+    <div class="header-status" id="systemStatus">
+      <span class="status-indicator"></span> System Ready
+    </div>
   </header>
 
   <main class="container">
     <div class="diagnostic-grid">
 
       <aside class="sidebar">
-        <h2><i class="fas fa-tasks" aria-hidden="true"></i> Diagnostic Tests</h2>
+        <h2><i class="fas fa-microchip" aria-hidden="true"></i> Hardware Scan</h2>
         <?php
         $tests = [
-          ['all',     'fa-microchip',       'Full System Scan'],
-          ['cpu',     'fa-microchip',       'CPU Stress Test'],
-          ['ram',     'fa-memory',          'Memory Test'],
-          ['storage', 'fa-hdd',             'Storage Health'],
-          ['gpu',     'fa-desktop',         'GPU Diagnostic'],
-          ['temp',    'fa-thermometer-half','Temperature Check'],
+          ['all',     'fa-microchip',       'Full System'],
+          ['cpu',     'fa-microchip',       'CPU Test'],
+          ['ram',     'fa-memory',          'Memory'],
+          ['storage', 'fa-hdd',             'Storage'],
+          ['gpu',     'fa-desktop',         'GPU Check'],
+          ['temp',    'fa-thermometer-half','Thermal'],
         ];
         foreach ($tests as $i => [$key, $icon, $label]):
         ?>
@@ -52,34 +60,36 @@
           </div>
         </div>
 
-        <div class="progress-section" id="progressSection" style="display:none" aria-live="polite">
-          <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="testName">
-            <div class="progress-fill" id="progressFill"></div>
+        <div class="controls-card">
+          <div class="progress-section" id="progressSection" style="display:none" aria-live="polite">
+            <div class="progress-header">
+              <span id="testName">Initializing system…</span>
+              <span id="testPercent">0%</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
           </div>
-          <div class="test-status">
-            <span id="testName">Running diagnostics…</span>
-            <span id="testPercent">0%</span>
-          </div>
-        </div>
 
-        <div class="action-buttons">
-          <button class="btn btn-primary" onclick="startDiagnostic()">
-            <i class="fas fa-play" aria-hidden="true"></i> Start Diagnostic
-          </button>
-          <button class="btn btn-secondary" onclick="clearResults()">
-            <i class="fas fa-trash" aria-hidden="true"></i> Clear
-          </button>
-          <button class="btn btn-secondary" onclick="generateReport()">
-            <i class="fas fa-file-alt" aria-hidden="true"></i> Report
-          </button>
+          <div class="action-buttons">
+            <button class="btn btn-primary" onclick="startDiagnostic()">
+              <i class="fas fa-play" aria-hidden="true"></i> Run Scan
+            </button>
+            <button class="btn btn-secondary" onclick="clearResults()">
+              <i class="fas fa-undo" aria-hidden="true"></i> Reset
+            </button>
+            <button class="btn btn-secondary" onclick="generateReport()">
+              <i class="fas fa-file-export" aria-hidden="true"></i> Export Report
+            </button>
+          </div>
         </div>
 
         <div class="results-panel">
-          <h3><i class="fas fa-clipboard-list" aria-hidden="true"></i> Diagnostic Log</h3>
+          <h3><i class="fas fa-terminal" aria-hidden="true"></i> Diagnostic Console</h3>
           <div class="log-container" id="logContainer" role="log" aria-live="polite">
             <div class="log-entry">
               <span class="log-time">[00:00:00]</span>
-              <span class="log-info">System ready. Click "Start Diagnostic" to begin.</span>
+              <span class="log-info">System initialized. Awaiting user command.</span>
             </div>
           </div>
         </div>
